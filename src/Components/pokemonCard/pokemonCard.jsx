@@ -1,6 +1,7 @@
 import React from 'react'
-import {Grid, makeStyles, Card, CardContent, Typography, CardActionArea, CardMedia} from '@material-ui/core'
-import { setColor } from '../../Utils/functions'
+import {Grid, Box, makeStyles, Card, CardContent, Typography, CardActionArea, CardMedia} from '@material-ui/core'
+import { setColor, setId } from '../../Utils/functions'
+import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles( theme => ({
   card: {
@@ -19,19 +20,20 @@ const useStyles = makeStyles( theme => ({
   id: {
     fontStyle: 'normal',
     fontWeight: 'bold',
-    fontSize: 15,
+    fontSize: 19,
     color: 'rgba(0, 0, 0, 0.2)',
   },
   cover:{
     display: 'block',
     margin: '10px auto',
-    maxWidth: 120,
-    maxHeight: 120
+    maxWidth: '50%',
+    height: 293
   },
   name:{
     color: 'white',
     fontStyle: 'normal',
     fontWeight: 'bold',
+    marginTop: '20px',
     fontSize: '1.5rem',
     textTransform: 'capitalize',
   },
@@ -49,36 +51,39 @@ const useStyles = makeStyles( theme => ({
     borderRadius: '50px',
     textTransform: 'capitalize',
     width: '80%',
+  },
+  link: {
+    textDecoration: 'none !important'
   }
 }))
 
 const PokemonCard = ({pokemon}) => {
   const classes = useStyles()
   return (
-    <Grid container item xs={12} sm={12}  md={4} lg={3} spacing={2}>
+    <Grid container item xs={12} sm={12}  md={6} lg={6}>
       <CardActionArea>
-        <Card className={classes.card} style={{background: setColor()}}>
-          <div className={classes.details}>
-            <CardContent className={classes.content}>
-              <Typography className={classes.id} component='span' variant='span'>
-                #001
-              </Typography>
-              <Typography className={classes.name} component='h5' variant='h5'>
-                Bulbasaur
-              </Typography>
-              <Typography component='span' variant='span' className={classes.type}>
-                Grass
-              </Typography>
-            </CardContent>
-            <CardMedia
-              className={classes.cover}
-              component='img'
-              // heigth='140'
-              alt='bulbasaur'
-              image='https://pokeres.bastionbot.org/images/pokemon/1.png'
-              title="bulbasaur"
-            />
-          </div>
+        <Card className={classes.card} style={{background: setColor(pokemon.type)}}>
+          <Link to={`/pokemon/${pokemon.id}`} className={classes.link}>
+            <div className={classes.details}>
+              <CardContent className={classes.content}>
+                <Box className={classes.id} component='span'>{setId(pokemon.id)}</Box>
+                <Typography className={classes.name} component='h5' variant='h5'>
+                  {pokemon.name}
+                </Typography>
+                <Box component='div' style={{marginTop: '20px'}}>
+                  <Box component='span' className={classes.type}>Grass</Box>
+                </Box>
+              </CardContent>
+              <CardMedia
+                className={classes.cover}
+                component='img'
+                // heigth='140'
+                alt={pokemon.name}
+                image={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
+                title={pokemon.name}  
+              />
+            </div>
+          </Link>
         </Card>
       </CardActionArea>
     </Grid>

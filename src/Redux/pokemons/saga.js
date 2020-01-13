@@ -6,9 +6,22 @@ let url = process.env.REACT_APP_API_URL
 
 function* getPokemons () {
   try {
-    const response = yield call(get, url)
-    yield put(receivePokemons())
+    let data = []
+    const response = yield call(get, url + '?limit=5')
+    for (let index = 0; index < response.data.results.length; index++) {
+      let pokemonData = yield call(get, response.data.results[index].url)
+      data.push(pokemonData.data)
+      data.map( pokemon => {
+        pokemon.types.map( t => {
+          if (t.slot === 1){
+            pokemon.type = t.type.name
+          } 
+        })
+      })
+    }
+    yield put(receivePokemons(data))
   } catch (err) {
+    console.log(err)
     yield put(errorGetPokemons())
   }
 }

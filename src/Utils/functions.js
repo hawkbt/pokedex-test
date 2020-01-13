@@ -1,3 +1,7 @@
+export const setId = value => {
+  return `#${value.toString().padStart(3, '0')}`
+}
+
 export const setColor = (value) =>{
   switch (value) {
     case 'water':
