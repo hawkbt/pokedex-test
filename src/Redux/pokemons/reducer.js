@@ -1,10 +1,11 @@
-import { GET_POKEMONS, REQUEST_POKEMON, SUCCESS_REQUEST_POKEMON, ERROR_REQUEST_POKEMON, RECEIVE_POKEMONS, ERROR_GET_POKEMONS } from "./actions"
+import { GET_POKEMONS, REQUEST_POKEMON, SUCCESS_REQUEST_POKEMON, ERROR_REQUEST_POKEMON, RECEIVE_POKEMONS, ERROR_GET_POKEMONS, GET_FAVORITES } from "./actions"
+import cookie from '../../Utils/cookieHandler'
 
 export const initialState ={
   pokemons: [],
   pokemon: {},
   loading: false,
-  favorites: [],
+  favorites:  cookie.getCookie('favorites') || [],
   page: 1
 }
 
@@ -21,6 +22,9 @@ const reducer = (state = initialState, action = {}) => {
     case ERROR_REQUEST_POKEMON:
     case ERROR_GET_POKEMONS:
       return {...state, loading: false}
+    case GET_FAVORITES:
+      let favorites = cookie.getCookie('favorites')
+      return {...state, favorites}
     default:
       return {...state}
   }

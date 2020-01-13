@@ -39,6 +39,10 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  link:{
+    textDecoration: 'none',
+    color: '#6C6C6C'
+  }
 }));
 
 function Navbar(props) {
@@ -57,7 +61,7 @@ function Navbar(props) {
       <Divider />
       <List>
         {['Pokemons', 'Favorites'].map( (text, index) => (
-          <Link to={index === 0 ? '/':'/favorites'}>
+          <Link to={index === 0 ? '/':'/favorites'} className={classes.link}>
             <ListItem button key={text}>
               <ListItemIcon>{index === 0 ? <PetsIcon /> : <FavoriteIcon />}</ListItemIcon>
               <ListItemText primary={text} />
