@@ -10,7 +10,7 @@ export const ADD_TO_FAVORITE = 'ADD_TO_FAVORITE'
 export const GET_FAVORITES = 'GET_FAVORITES'
 
 export const getPokemons = page => ({type: GET_POKEMONS, page})
-export const receivePokemons = data => ({type: RECEIVE_POKEMONS, data})
+export const receivePokemons = (data, page, hasMore) => ({type: RECEIVE_POKEMONS, data, page, hasMore})
 export const errorGetPokemons = () => ({type: ERROR_GET_POKEMONS})
 
 export const requestPokemon = id => ({type: REQUEST_POKEMON, id})

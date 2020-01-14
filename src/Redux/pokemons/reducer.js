@@ -4,9 +4,10 @@ import cookie from '../../Utils/cookieHandler'
 export const initialState ={
   pokemons: [],
   pokemon: {},
+  hasMore: true,
   loading: false,
   favorites:  cookie.getCookie('favorites') || [],
-  page: 1
+  page: 0
 }
 
 
@@ -16,7 +17,10 @@ const reducer = (state = initialState, action = {}) => {
     case REQUEST_POKEMON:
       return {...state, loading: true, page: action.page || 1}
     case RECEIVE_POKEMONS:
-      return {...state, pokemons: action.data, loading: false}
+      // console.log(action.page)
+      let hasMore = action.hasMore !== null ? true : false
+      let pokemons = [...new Set([...state.pokemons,...action.data])]
+      return {...state, pokemons, loading: false, page: action.page, hasMore}
     case SUCCESS_REQUEST_POKEMON:
       return {...state, pokemon: action.data, loading: false}
     case ERROR_REQUEST_POKEMON:

@@ -23,11 +23,23 @@ const useStyles = makeStyles( theme => ({
     fontSize: 19,
     color: 'rgba(0, 0, 0, 0.2)',
   },
+  picture:{
+    position: 'relative',
+    width: '70%',
+    paddingTop: '65%',
+    alignItems: 'center',
+    display: 'flex',
+  },
   cover:{
-    display: 'block',
-    margin: '10px auto',
-    maxWidth: '50%',
-    height: 293
+    width: '100%',  
+    position: 'absolute',
+    top: '2vh',
+    left: 0,
+    bottom: 0,
+    right: 0,
+    [theme.breakpoints.between('xs',380)]:{
+      top: '4vh'
+    }
   },
   name:{
     color: 'white',
@@ -53,6 +65,7 @@ const useStyles = makeStyles( theme => ({
     width: '80%',
   },
   link: {
+    width: '100%',
     textDecoration: 'none !important'
   }
 }))
@@ -71,17 +84,23 @@ const PokemonCard = ({pokemon}) => {
                   {pokemon.name}
                 </Typography>
                 <Box component='div' style={{marginTop: '20px'}}>
-                  <Box component='span' className={classes.type}>Grass</Box>
+                  {(pokemon.types || []).map( type => {
+                    return(
+                      <Box component='span' className={classes.type} key={`${type.slot}Type`}>{type.type.name}</Box>
+                    )
+                  })}
                 </Box>
               </CardContent>
-              <CardMedia
-                className={classes.cover}
-                component='img'
-                // heigth='140'
-                alt={pokemon.name}
-                image={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
-                title={pokemon.name}  
-              />
+              <Box component='div' className={classes.picture}>
+                <CardMedia
+                  className={classes.cover}
+                  component='img'
+                  // heigth='140'
+                  alt={pokemon.name}
+                  image={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
+                  title={pokemon.name}  
+                />
+              </Box>
             </div>
           </Link>
         </Card>

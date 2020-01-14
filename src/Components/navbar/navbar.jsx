@@ -61,8 +61,8 @@ function Navbar(props) {
       <Divider />
       <List>
         {['Pokemons', 'Favorites'].map( (text, index) => (
-          <Link to={index === 0 ? '/':'/favorites'} className={classes.link}>
-            <ListItem button key={text}>
+          <Link to={index === 0 ? '/':'/favorites'} className={classes.link} key={text + index + 'list'}>
+            <ListItem button>
               <ListItemIcon>{index === 0 ? <PetsIcon /> : <FavoriteIcon />}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>

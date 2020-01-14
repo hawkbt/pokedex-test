@@ -28,9 +28,9 @@ export const setColor = (value) =>{
       return '#EFAEFF'
     case 'ice':
       return '#AACEF1'
-    case 'figther':
+    case 'fighting':
       return '#A99A89'
-    case 'phisiq':
+    case 'psychic':
       return '#F44987'
     case 'rock':
       return '#898F71'

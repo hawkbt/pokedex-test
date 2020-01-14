@@ -4,10 +4,11 @@ import { receivePokemons, successRequestPokemon, REQUEST_POKEMON, errorRequestPo
 
 let url = process.env.REACT_APP_API_URL
 
-function* getPokemons () {
+function* getPokemons ({page}) {
   try {
+    let pages = page !== 0 ? `&offset=${page * 5}`: ''
     let data = []
-    const response = yield call(get, url + '?limit=5')
+    const response = yield call(get, url + '?limit=5' + pages)
     for (let index = 0; index < response.data.results.length; index++) {
       let pokemonData = yield call(get, response.data.results[index].url)
       data.push(pokemonData.data)
@@ -16,10 +17,12 @@ function* getPokemons () {
           if (t.slot === 1){
             pokemon.type = t.type.name
           } 
+          return true
         })
+        return true
       })
     }
-    yield put(receivePokemons(data))
+    yield put(receivePokemons(data, page+1 , response.data.next))
   } catch (err) {
     console.log(err)
     yield put(errorGetPokemons())
