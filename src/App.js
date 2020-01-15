@@ -16,14 +16,14 @@ const App = () =>{
   return (
     <Navbar>
       <Switch location={location}>
-        <Route path='/favorites'>
-          <FavoritesLoading/>
+        <Route exact path='/'>
+          <HomeLoading/>
         </Route>
+        {/* <Route path='/favorites'>
+          <FavoritesLoading/>
+        </Route> */}
         <Route path='/pokemon/:id'>
           <PokemonDetailLoading/>
-        </Route>
-        <Route path='/'>
-          <HomeLoading/>
         </Route>
         <Route path="*">
           <NotFound />
