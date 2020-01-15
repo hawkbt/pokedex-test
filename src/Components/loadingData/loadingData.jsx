@@ -1,5 +1,5 @@
 import React from 'react'
-import CachedIcon from '@material-ui/icons/Cached';
+import { CircularProgress } from '@material-ui/core';
 
 const style = {
   display:'flex',
@@ -14,7 +14,7 @@ const style = {
 const LoadingData = () => {
   return (
     <div style={style}>
-      ... <CachedIcon/> ...
+      <CircularProgress size={40}/>
     </div>
   )
 }
