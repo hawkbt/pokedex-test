@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from 'react'
 import {Grid, Container} from '@material-ui/core'
 import { PokemonCard } from '../Components/pokemonCard'
 import { useSelector, useDispatch } from "react-redux";
-import { getPokemons } from '../Redux/pokemons/actions';
+import { getPokemons, resetPage } from '../Redux/pokemons/actions';
 import { LoadingData } from '../Components/loadingData';
 
 const Home = () => {
@@ -13,12 +13,17 @@ const Home = () => {
   const dispatch = useDispatch()
   
   const getPkms = useCallback( ()=>
-    dispatch(getPokemons(page))
+    dispatch(getPokemons(0))
     ,[dispatch, page] 
   )
 
+  const reset = useCallback( () => dispatch(resetPage()), [resetPage])
+
   useEffect( () => {
     getPkms()
+    return () => {
+      reset()
+    }
   },[])
 
   const next = useCallback(()=> {

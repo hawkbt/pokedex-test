@@ -19,9 +19,9 @@ const App = () =>{
         <Route exact path='/'>
           <HomeLoading/>
         </Route>
-        {/* <Route path='/favorites'>
+        <Route path='/favorites'>
           <FavoritesLoading/>
-        </Route> */}
+        </Route>
         <Route path='/pokemon/:id'>
           <PokemonDetailLoading/>
         </Route>

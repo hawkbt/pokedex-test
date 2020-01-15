@@ -6,7 +6,8 @@ export const setId = value => {
 
 export const checkFavorite = (id) => {
   let favorites = handler.getCookie('favorites') || []
-  return favorites.indexOf(id.toString()) !== -1 ? true: false
+  let pos = favorites.findIndex( f => parseInt(f.id) === parseInt(id) )
+  return pos === -1 ? false: true
 }
 
 export const setSpriteName = (sprite) =>{

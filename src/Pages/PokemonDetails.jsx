@@ -21,7 +21,7 @@ const PokemonDetails = () => {
     dispatch(requestPokemon(id)), [dispatch, id]
   )
 
-  const setFavorite = useCallback(() => dispatch(setFavorites(id)), [id, dispatch])
+  const setFavorite = useCallback(() => dispatch(setFavorites(pokemon)), [pokemon, dispatch])
 
   const rmFavorite = useCallback( () => dispatch(removeFavorite(id)), [id, dispatch])
 

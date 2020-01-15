@@ -60,7 +60,7 @@ function Navbar(props) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {['Pokemons'].map( (text, index) => (
+        {['Pokemons', 'Favorites'].map( (text, index) => (
           <Link to={index === 0 ? '/':'/favorites'} className={classes.link} key={text + index + 'list'}>
             <ListItem button>
               <ListItemIcon>{index === 0 ? <PetsIcon /> : <FavoriteIcon />}</ListItemIcon>
