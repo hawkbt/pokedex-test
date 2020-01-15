@@ -1,8 +1,11 @@
 import React, { useEffect, useCallback } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect, useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
 import { requestPokemon } from '../Redux/pokemons/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { LoadingData } from '../Components/loadingData';
+import { setColor } from '../Utils/functions';
+import '../Assets/styles/details.scss'
+import { Box } from '@material-ui/core';
 
 const PokemonDetails = () => {
   let {id} = useParams()
@@ -20,17 +23,16 @@ const PokemonDetails = () => {
   }, [id, request])
 
   return (
-    <div>
-      {pokemon.name}
+    <div className='pokemonDetails'>
+      {loading ? 
+        <LoadingData/>:
+        <Box bgcolor={setColor(pokemon.type)} component='div' className='imageContainer'>
+          <div></div>
+        </Box>
+      }
     </div>
   )
 }
 
-const mapStateToProps = state => ({
-  pokemon: state.pokemons.pokemon,
-  loading: state.pokemons.loading,
-})
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ requestPokemon }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(PokemonDetails)
+export default PokemonDetails

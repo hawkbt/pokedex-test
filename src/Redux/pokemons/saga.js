@@ -22,9 +22,8 @@ function* getPokemons ({page}) {
         return true
       })
     }
-    yield put(receivePokemons(data, page+1 , response.data.next))
+    yield put(receivePokemons(data, parseInt(page+1) , response.data.next))
   } catch (err) {
-    console.log(err)
     yield put(errorGetPokemons())
   }
 }
@@ -32,6 +31,12 @@ function* getPokemons ({page}) {
 function* requestPokemon({id}){
   try {
     const response = yield call(get, url + '/' + id)
+    response.data.types.map( t => {
+      if (t.slot === 1){
+        response.data.type = t.type.name
+      } 
+      return true
+    })
     yield put(successRequestPokemon(response.data))
   } catch (err) {
     yield put(errorRequestPokemon())

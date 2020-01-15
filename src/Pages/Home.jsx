@@ -1,22 +1,32 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import {Grid, Container} from '@material-ui/core'
 import { PokemonCard } from '../Components/pokemonCard'
-import { bindActionCreators } from 'redux'
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getPokemons } from '../Redux/pokemons/actions';
 import { LoadingData } from '../Components/loadingData';
 
-const Home = ({pokemons, page, getPokemons, loading, hasMore}) => {
-  useEffect( () => {
-    getPokemons(0)
-  },[getPokemons])
+const Home = () => {
+  const pokemons = useSelector(state => state.pokemons.pokemons)
+  const loading = useSelector(state => state.pokemons.loading)
+  const page = useSelector(state => state.pokemons.page)
+  const hasMore = useSelector(state => state.pokemons.hasMore)
+  const dispatch = useDispatch()
+  
+  const getPkms = useCallback( ()=>
+    dispatch(getPokemons(page))
+    ,[dispatch, page] 
+  )
 
-  const next = () => {
-    if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight ) return;
-    if(hasMore){
-      getPokemons(page)
-    }
-  }
+  useEffect( () => {
+    getPkms()
+  },[])
+
+  const next = useCallback(()=> {
+    if (window.innerHeight - 12 + document.documentElement.scrollTop !== document.documentElement.offsetHeight ) return;
+    if(hasMore && !loading){
+      dispatch(getPokemons(page))
+    }    
+  }, [dispatch, page, hasMore, loading])
 
   useEffect( () => {
     window.addEventListener('scroll', next)
@@ -24,8 +34,8 @@ const Home = ({pokemons, page, getPokemons, loading, hasMore}) => {
   }, [next])
 
   return (
-    <Container>
-      <Grid container direction="row" justify="flex-start" alignItems="center" spacing={3}>
+    <Container >
+      <Grid container direction="row" justify="flex-start" alignItems="center" spacing={3} style={{paddingTop: '32px'}}>
         {pokemons.map( pokemon => {
           return(
             <PokemonCard pokemon={pokemon} key={pokemon.id}/>
@@ -37,13 +47,4 @@ const Home = ({pokemons, page, getPokemons, loading, hasMore}) => {
   )
 }
 
-const mapStateToProps = state => ({
-  pokemons: state.pokemons.pokemons,
-  loading: state.pokemons.loading,
-  page: state.pokemons.page,
-  hasMore: state.pokemons.hasMore
-})
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ getPokemons }, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default Home
