@@ -9,6 +9,17 @@ export const checkFavorite = (id) => {
   return favorites.indexOf(id.toString()) !== -1 ? true: false
 }
 
+export const setSpriteName = (sprite) =>{
+  let value = `${sprite.split('_')[0]} ${sprite.split('_')[1]}`
+  return value
+}
+
+export const setAbilities = (abilities) => {
+  let value = ''
+  abilities.map( a => value += `${a.ability.name} `)
+  return value
+}
+
 export const setColor = (value) =>{
   switch (value) {
     case 'water':

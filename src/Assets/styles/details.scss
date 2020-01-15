@@ -1,4 +1,9 @@
 .pokemonDetails{
+  .info{
+    span, h5, h6{
+      text-transform: capitalize !important;
+    }
+  }
   .imageContainer{
     padding: 20px;
     padding-bottom: 0;
