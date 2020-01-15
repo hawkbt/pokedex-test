@@ -1,12 +1,12 @@
-import { GET_POKEMONS, REQUEST_POKEMON, SUCCESS_REQUEST_POKEMON, ERROR_REQUEST_POKEMON, RECEIVE_POKEMONS, ERROR_GET_POKEMONS, GET_FAVORITES } from "./actions"
-import cookie from '../../Utils/cookieHandler'
+import { GET_POKEMONS, REQUEST_POKEMON, SUCCESS_REQUEST_POKEMON, ERROR_REQUEST_POKEMON, RECEIVE_POKEMONS, ERROR_GET_POKEMONS, SET_FAVORITES, REMOVE_FAVORITE } from "./actions"
+import handler from '../../Utils/cookieHandler'
+import { checkFavorite } from "../../Utils/functions"
 
 export const initialState ={
   pokemons: [],
   pokemon: {},
   hasMore: true,
   loading: false,
-  favorites:  cookie.getCookie('favorites') || [],
   page: 0
 }
 
@@ -22,13 +22,22 @@ const reducer = (state = initialState, action = {}) => {
       let pokemons = [...new Set([...state.pokemons,...action.data])]
       return {...state, pokemons, loading: false, page: action.page, hasMore}
     case SUCCESS_REQUEST_POKEMON:
-      return {...state, pokemon: action.data, loading: false}
+      let pokemon = action.data
+      pokemon.favorite = checkFavorite(action.data.id)
+      return {...state, pokemon, loading: false}
     case ERROR_REQUEST_POKEMON:
     case ERROR_GET_POKEMONS:
       return {...state, loading: false}
-    case GET_FAVORITES:
-      let favorites = cookie.getCookie('favorites')
-      return {...state, favorites}
+    case SET_FAVORITES:
+      let favorites = handler.getCookie('favorites') || []
+      favorites.push(action.id)
+      handler.setCookie('favorites', favorites)
+      return {...state, pokemon: {...state.pokemon, favorite: true}}
+    case REMOVE_FAVORITE:
+      let cookies = handler.getCookie('favorites')
+      cookies.splice(cookies[action.id],1)
+      handler.setCookie('favorites',cookies)
+      return {...state, pokemon: {...state.pokemon, favorite: false}}
     default:
       return {...state}
   }

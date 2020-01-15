@@ -2,6 +2,7 @@ import React from 'react'
 import {Grid, Box, makeStyles, Card, CardContent, Typography, CardActionArea, CardMedia} from '@material-ui/core'
 import { setColor, setId } from '../../Utils/functions'
 import {Link} from 'react-router-dom'
+import { PokemonType } from '../pokemonType/pokemonType'
 
 const useStyles = makeStyles( theme => ({
   card: {
@@ -49,21 +50,6 @@ const useStyles = makeStyles( theme => ({
     fontSize: '1.5rem',
     textTransform: 'capitalize',
   },
-  type: {
-    display: 'block',
-    fontSize: '12px',
-    lineHeight: '19px',
-    textAlign: 'center',
-    color: 'white',
-    fontWeight: 'bold',
-    background: 'rgba(0, 0, 0, 0.2)',
-    marginBottom: '5px',
-    padding: '2px',
-    height: '22px',
-    borderRadius: '50px',
-    textTransform: 'capitalize',
-    width: '80%',
-  },
   link: {
     width: '100%',
     textDecoration: 'none !important'
@@ -83,13 +69,7 @@ const PokemonCard = ({pokemon}) => {
                 <Typography className={classes.name} component='h5' variant='h5'>
                   {pokemon.name}
                 </Typography>
-                <Box component='div' style={{marginTop: '20px'}}>
-                  {(pokemon.types || []).map( type => {
-                    return(
-                      <Box component='span' className={classes.type} key={`${type.slot}Type`}>{type.type.name}</Box>
-                    )
-                  })}
-                </Box>
+                <PokemonType types={pokemon.types} />
               </CardContent>
               <Box component='div' className={classes.picture}>
                 <CardMedia

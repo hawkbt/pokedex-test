@@ -1,5 +1,12 @@
+import handler from './cookieHandler'
+
 export const setId = value => {
   return `#${value.toString().padStart(3, '0')}`
+}
+
+export const checkFavorite = (id) => {
+  let favorites = handler.getCookie('favorites') || []
+  return favorites.indexOf(id.toString()) !== -1 ? true: false
 }
 
 export const setColor = (value) =>{

@@ -6,8 +6,8 @@ export const REQUEST_POKEMON =  'REQUEST_POKEMON'
 export const SUCCESS_REQUEST_POKEMON = 'SUCCESS_REQUEST_POKEMON'
 export const ERROR_REQUEST_POKEMON = 'ERROR_REQUEST_POKEMON'
 
-export const ADD_TO_FAVORITE = 'ADD_TO_FAVORITE'
-export const GET_FAVORITES = 'GET_FAVORITES'
+export const SET_FAVORITES = 'SET_FAVORITES'
+export const REMOVE_FAVORITE = 'REMOVE_FAVORITE'
 
 export const getPokemons = page => ({type: GET_POKEMONS, page})
 export const receivePokemons = (data, page, hasMore) => ({type: RECEIVE_POKEMONS, data, page, hasMore})
@@ -17,5 +17,5 @@ export const requestPokemon = id => ({type: REQUEST_POKEMON, id})
 export const successRequestPokemon = data => ({type: SUCCESS_REQUEST_POKEMON, data})
 export const errorRequestPokemon = () => ({type: ERROR_REQUEST_POKEMON})
 
-export const getFavorites = () => ({type: GET_FAVORITES})
-export const addFavorite = id => ({type: ADD_TO_FAVORITE, id})
+export const setFavorites = id => ({type: SET_FAVORITES, id})
+export const removeFavorite = id => ({type: REMOVE_FAVORITE, id})
