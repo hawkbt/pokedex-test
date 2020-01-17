@@ -10,7 +10,7 @@ const Favorites = () => {
   const dispatch = useDispatch()
   const loading = useSelector(state => state.pokemons.loading)
 
-  const getFav = useCallback( ()=> dispatch(getFavorites()),[getFavorites] )
+  const getFav = useCallback( ()=> dispatch(getFavorites()),[getFavorites, dispatch] )
 
   useEffect( () => {
     getFav()
